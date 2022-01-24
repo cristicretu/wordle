@@ -2,6 +2,7 @@
 
 let grid = document.getElementById('grid')
 let message = document.getElementById('message')
+let keyboard = document.getElementById('keyboard')
 
 function createGrid() {
   for (let i = 0; i < 6; ++i) {
@@ -1018,22 +1019,23 @@ function getRandomWord() {
 
 let word = getRandomWord()
 
+const green = 'rgb(96, 138, 84)'
+const gray = 'rgb(58,58,60)'
+const yellow = 'rgb(177, 160, 76)'
+
 function findColor(parent, child, index, line) {
   if (parent[index] === child[index]) {
-    return 'rgb(96, 138, 84)'
+    return green
   }
 
   let char = child[index]
   for (let i = 0; i < parent.length; ++i) {
-    if (
-      parent[i] == char &&
-      line.children[i].style.backgroundColor !== 'rgb(96, 138, 84)'
-    ) {
-      return 'rgb(177, 160, 76)'
+    if (parent[i] == char && line.children[i].style.backgroundColor !== green) {
+      return yellow
     }
   }
 
-  if (char !== undefined) return 'rgb(58,58,60)'
+  if (char !== undefined) return gray
 }
 
 function renderPastAttempt(row, attempt) {
@@ -1057,20 +1059,6 @@ function renderCurrentAttempt(row, attempt) {
   }
 }
 
-function binarySearch(words, currentAttempt) {
-  let lb = 0,
-    rb = words.length - 1
-
-  while (lb <= rb) {
-    let mid = Math.floor((lb + rb) / 2)
-    if (words[mid].toLowerCase() === currentAttempt) return mid
-    else if (words[mid] > currentAttempt) rb = mid - 1
-    else lb = mid + 1
-  }
-
-  return -1
-}
-
 createGrid()
 
 let attempt = 0
@@ -1083,6 +1071,10 @@ function logKey(e) {
     currentAttempt = currentAttempt.slice(0, -1)
     renderCurrentAttempt(attempt, currentAttempt)
   } else if (char === 'enter') {
+    if (!currentAttempt.length) {
+      return
+    }
+
     if (currentAttempt.length < 5) {
       alert('Word is too short')
       return
@@ -1121,5 +1113,76 @@ function logKey(e) {
     renderCurrentAttempt(attempt, currentAttempt)
   }
 }
+
+function createKeyboard() {
+  createKbRow('qwertyuiop')
+  createKbRow('asdfghjkl')
+  createKbRow('XzxcvbnmZ')
+}
+
+function createKbRow(row) {
+  let rowDiv = document.createElement('div')
+  for (let char in row) {
+    let button = document.createElement('button')
+    button.className = 'button'
+    button.style.backgroundColor = gray
+    if (row[char] !== 'X' && row[char] !== 'Z') {
+      button.innerHTML = row[char]
+      button.onclick = () => {
+        if (currentAttempt.length < 5) currentAttempt += row[char]
+        renderCurrentAttempt(attempt, currentAttempt)
+      }
+    } else if (row[char] === 'X') {
+      button.innerHTML = 'ENTER'
+      button.onclick = () => {
+        if (!currentAttempt.length) {
+          return
+        }
+
+        if (currentAttempt.length < 5) {
+          alert('Word is too short')
+          return
+        }
+
+        if (currentAttempt === word) {
+          message.innerHTML = 'Ai castigat!'
+          renderPastAttempt(attempt, currentAttempt)
+          attempt = 999
+
+          return
+        }
+
+        if (currentAttempt !== word && attempt === 5) {
+          message.innerHTML = `Ai pierdut! Cuvantul corect a fost: ${word}`
+          renderPastAttempt(attempt, currentAttempt)
+          attempt = 999
+          return
+        }
+
+        // check if currentAttempt exists in the array of words with binary search
+        if (words.indexOf(currentAttempt) === -1) {
+          alert('Word does not exist')
+          return
+        }
+
+        renderPastAttempt(attempt, currentAttempt)
+        attempt += 1
+        currentAttempt = ''
+      }
+    } else if (row[char] === 'Z') {
+      button.innerHTML = 'DELETE'
+      button.onclick = () => {
+        currentAttempt = currentAttempt.slice(0, -1)
+        renderCurrentAttempt(attempt, currentAttempt)
+      }
+    }
+
+    rowDiv.appendChild(button)
+  }
+
+  keyboard.appendChild(rowDiv)
+}
+
+createKeyboard()
 
 document.addEventListener('keydown', logKey)
