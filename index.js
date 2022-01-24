@@ -1039,6 +1039,8 @@ function findColor(parent, child, index, line) {
 }
 
 function renderPastAttempt(row, attempt) {
+  if (row > 5) return
+
   let line = grid.children[row]
   for (let i = 0; i < 5; ++i) {
     let col = line.children[i]
@@ -1048,10 +1050,26 @@ function renderPastAttempt(row, attempt) {
         ? `2.5px solid ${col.style.backgroundColor}`
         : '2.5px solid rgb(58,58,60)'
     col.innerHTML = attempt[i] ?? '<div style="opacity: 0">X<div>'
+
+    // change KB color
+
+    // let bestColors = new Map()
+    // for (let i = 0; i < 5; ++i) {
+    //   let color = findColor(word, attempt, i, line)
+    //   let key = attempt[i]
+    //   let bestColor = bestColors.get(key)
+    //   bestColors.set(key, getBetterColor(color, bestColor))
+    // }
+    // for (let [key, button] of keyboardButtons) {
+    //   button.style.backgroundColor = bestColors.get(key)
+    //   button.style.borderColor = bestColors.get(key)
+    // }
   }
 }
 
 function renderCurrentAttempt(row, attempt) {
+  if (row > 5) return
+
   let line = grid.children[row]
   for (let i = 0; i < 5; ++i) {
     let col = line.children[i]
