@@ -69,11 +69,37 @@ function renderPastAttempt(row, attempt) {
   }
 }
 
+function renderCurrentAttempt(row, attempt) {
+  let line = grid.children[row]
+  for (let i = 0; i < 5; ++i) {
+    let col = line.children[i]
+    col.innerHTML = attempt[i] ?? '<div style="opacity: 0">X<div>'
+  }
+}
+
 createGrid()
 
-renderPastAttempt(0, 'truck')
-renderPastAttempt(1, 'knife')
-renderPastAttempt(2, 'knits')
-renderPastAttempt(3, 'kloof')
-renderPastAttempt(4, 'knel')
-renderPastAttempt(5, 'knoll')
+let attempt = 0
+let currentAttempt = ''
+
+function logKey(e) {
+  let char = e.key
+  console.log(char.match(/[a-zA-Z]/g))
+  if (char === 'Backspace') {
+    currentAttempt = currentAttempt.slice(0, -1)
+    renderCurrentAttempt(attempt, currentAttempt)
+  } else if (char === 'Enter') {
+    renderPastAttempt(attempt, currentAttempt)
+    attempt += 1
+    currentAttempt = ''
+  } else if (
+    char.match(/[a-zA-Z]/) &&
+    currentAttempt.length < 5 &&
+    char.length === 1
+  ) {
+    currentAttempt += char
+    renderCurrentAttempt(attempt, currentAttempt)
+  }
+}
+
+document.addEventListener('keydown', logKey)
