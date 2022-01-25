@@ -1,36 +1,5 @@
 'use strict'
 
-let grid = document.getElementById('grid')
-let message = document.getElementById('message')
-let keyboard = document.getElementById('keyboard')
-
-function createGrid() {
-  for (let i = 0; i < 6; ++i) {
-    let line = document.createElement('div')
-
-    for (let j = 0; j < 5; ++j) {
-      let col = document.createElement('div')
-      col.className = 'col'
-
-      line.appendChild(col)
-    }
-
-    grid.appendChild(line)
-  }
-}
-
-let count = 1
-
-function changeGrid() {
-  for (let i = 0; i < 6; ++i) {
-    let line = grid.children[i]
-    for (let j = 0; j < 5; ++j) {
-      let col = line.children
-      col[j].innerHTML = 'A'
-    }
-  }
-}
-
 const words = [
   'abate',
   'aboli',
@@ -1013,15 +982,37 @@ const words = [
   'zvelt'
 ]
 
-function getRandomWord() {
-  return words[Math.floor(Math.random() * words.length)]
-}
-
-let word = getRandomWord()
-
 const green = 'rgb(96, 138, 84)'
 const gray = 'rgb(58,58,60)'
 const yellow = 'rgb(177, 160, 76)'
+
+let grid = document.getElementById('grid')
+let message = document.getElementById('message')
+let keyboard = document.getElementById('keyboard')
+
+let word = getRandomWord()
+
+let attempt = 0
+let currentAttempt = ''
+
+function createGrid() {
+  for (let i = 0; i < 6; ++i) {
+    let line = document.createElement('div')
+
+    for (let j = 0; j < 5; ++j) {
+      let col = document.createElement('div')
+      col.className = 'col'
+
+      line.appendChild(col)
+    }
+
+    grid.appendChild(line)
+  }
+}
+
+function getRandomWord() {
+  return words[Math.floor(Math.random() * words.length)]
+}
 
 function findColor(parent, child, index, line) {
   if (parent[index] === child[index]) {
@@ -1076,11 +1067,6 @@ function renderCurrentAttempt(row, attempt) {
     col.innerHTML = attempt[i] ?? '<div style="opacity: 0">X<div>'
   }
 }
-
-createGrid()
-
-let attempt = 0
-let currentAttempt = ''
 
 function logKey(e) {
   if (e.metaKey || e.ctrlKey || e.altKey) return
@@ -1188,7 +1174,7 @@ function createKbRow(row) {
         currentAttempt = ''
       }
     } else if (row[char] === 'Z') {
-      button.innerHTML = 'DELETE'
+      button.innerHTML = 'DEL'
       button.onclick = () => {
         currentAttempt = currentAttempt.slice(0, -1)
         renderCurrentAttempt(attempt, currentAttempt)
@@ -1201,6 +1187,7 @@ function createKbRow(row) {
   keyboard.appendChild(rowDiv)
 }
 
-createKeyboard()
-
 document.addEventListener('keydown', logKey)
+
+createGrid()
+createKeyboard()

@@ -7,16 +7,57 @@
   </head>
   <body>
     <nav>
-      <div>In</div>
-      <h1>Wordle</h1>
-      <div>gh</div>
+      <div class="icon" id="info">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 15 15"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM8.24992 4.49999C8.24992 4.9142 7.91413 5.24999 7.49992 5.24999C7.08571 5.24999 6.74992 4.9142 6.74992 4.49999C6.74992 4.08577 7.08571 3.74999 7.49992 3.74999C7.91413 3.74999 8.24992 4.08577 8.24992 4.49999ZM6.00003 5.99999H6.50003H7.50003C7.77618 5.99999 8.00003 6.22384 8.00003 6.49999V9.99999H8.50003H9.00003V11H8.50003H7.50003H6.50003H6.00003V9.99999H6.50003H7.00003V6.99999H6.50003H6.00003V5.99999Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </div>
+      <h1>🇷🇴 Wordle</h1>
+      <a
+        href="https://github.com/cristicretu/wordle"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 15 15"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+        >
+          <path
+            d="M7.49936 0.850006C3.82767 0.850006 0.849976 3.8273 0.849976 7.50023C0.849976 10.4379 2.75523 12.9306 5.39775 13.8104C5.73047 13.8712 5.85171 13.6658 5.85171 13.4895C5.85171 13.3315 5.846 12.9135 5.84273 12.3587C3.99301 12.7604 3.60273 11.4671 3.60273 11.4671C3.30022 10.6988 2.86423 10.4942 2.86423 10.4942C2.26044 10.0819 2.90995 10.0901 2.90995 10.0901C3.57742 10.137 3.9285 10.7755 3.9285 10.7755C4.52167 11.7916 5.48512 11.4981 5.86396 11.3279C5.92438 10.8984 6.09625 10.6053 6.28608 10.4391C4.80948 10.2709 3.25695 9.70063 3.25695 7.15241C3.25695 6.42615 3.51618 5.83298 3.94157 5.368C3.87299 5.1998 3.64478 4.52375 4.00689 3.60807C4.00689 3.60807 4.56494 3.42926 5.83538 4.28941C6.36568 4.14204 6.93477 4.06856 7.50018 4.0657C8.06518 4.06856 8.63386 4.14204 9.16498 4.28941C10.4346 3.42926 10.9918 3.60807 10.9918 3.60807C11.3548 4.52375 11.1266 5.1998 11.0584 5.368C11.4846 5.83298 11.7418 6.42615 11.7418 7.15241C11.7418 9.70716 10.1868 10.2693 8.70571 10.4338C8.94412 10.6392 9.15681 11.045 9.15681 11.6655C9.15681 12.5542 9.14865 13.2715 9.14865 13.4895C9.14865 13.6675 9.26867 13.8745 9.60588 13.8095C12.2464 12.9282 14.15 10.4375 14.15 7.50023C14.15 3.8273 11.1723 0.850006 7.49936 0.850006Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </a>
     </nav>
     <hr />
     <h2 id="message"></h2>
-    <div id="grid"></div>
-    <div id="keyboard"></div>
+    <div id="game">
+      <div id="grid"></div>
+      <div id="keyboard"></div>
+    </div>
   </body>
   <style type="text/css">
+    .icon {
+      fill: white;
+      color: white;
+    }
     body,
     html {
       background: #111;
@@ -25,8 +66,19 @@
       text-align: center;
       text-transform: uppercase;
     }
+    #game {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 85vh;
+    }
+    h2 {
+      height: 0;
+      padding-bottom: 10px;
+    }
     #keyboard {
-      margin-top: 50px;
+      padding-bottom: 20px;
     }
     nav {
       align-items: center;
@@ -37,7 +89,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-    button {
+    .button {
       padding: 15px;
       border: none;
       font-size: 24px;
@@ -45,6 +97,7 @@
       margin: 2px;
       text-transform: uppercase;
       color: rgb(244, 244, 244);
+      cursor: pointer;
     }
     hr {
       max-width: 60vh;
@@ -69,6 +122,23 @@
       font-size: 2rem;
       font-weight: bold;
       line-height: 60px;
+    }
+
+    @media only screen and (max-width: 612px) {
+      .col {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+        line-height: 45px;
+      }
+      .button {
+        padding: 8px;
+        border: none;
+        font-size: 14px;
+        border-radius: 10px;
+        margin: 1px;
+        color: rgb(244, 244, 244);
+      }
     }
   </style>
   <script src="index.js"></script>
