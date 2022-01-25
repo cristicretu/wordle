@@ -1042,19 +1042,38 @@ function renderPastAttempt(row, attempt) {
         : '2.5px solid rgb(58,58,60)'
     col.innerHTML = attempt[i] ?? '<div style="opacity: 0">X<div>'
 
-    // change KB color
+    //lol
 
-    // let bestColors = new Map()
-    // for (let i = 0; i < 5; ++i) {
-    //   let color = findColor(word, attempt, i, line)
-    //   let key = attempt[i]
-    //   let bestColor = bestColors.get(key)
-    //   bestColors.set(key, getBetterColor(color, bestColor))
-    // }
-    // for (let [key, button] of keyboardButtons) {
-    //   button.style.backgroundColor = bestColors.get(key)
-    //   button.style.borderColor = bestColors.get(key)
-    // }
+    let line1 = keyboard.children[0]
+    let line2 = keyboard.children[1]
+    let line3 = keyboard.children[2]
+
+    for (let j = 0; j < line1.children.length; ++j) {
+      if (line1.children[j].innerHTML === attempt[i]) {
+        line1.children[j].style.backgroundColor =
+          line1.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
+            ? col.style.backgroundColor
+            : line1.children[j].style.backgroundColor
+      }
+    }
+
+    for (let j = 0; j < line2.children.length; ++j) {
+      if (line2.children[j].innerHTML === attempt[i]) {
+        line2.children[j].style.backgroundColor =
+          line2.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
+            ? col.style.backgroundColor
+            : line2.children[j].style.backgroundColor
+      }
+    }
+
+    for (let j = 0; j < line3.children.length; ++j) {
+      if (line3.children[j].innerHTML === attempt[i]) {
+        line3.children[j].style.backgroundColor =
+          line3.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
+            ? col.style.backgroundColor
+            : line3.children[j].style.backgroundColor
+      }
+    }
   }
 }
 
@@ -1129,7 +1148,7 @@ function createKbRow(row) {
   for (let char in row) {
     let button = document.createElement('button')
     button.className = 'button'
-    button.style.backgroundColor = gray
+    button.style.backgroundColor = 'rgb(118, 118, 118)'
     if (row[char] !== 'X' && row[char] !== 'Z') {
       button.innerHTML = row[char]
       button.onclick = () => {
