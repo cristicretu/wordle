@@ -16,4 +16,4 @@ jobs:
         run: |
           echo "Issue title: ${{ github.event.issue.title }}"
           echo "Issue body: ${{ github.event.issue.body }}"
-          echo "Issue author: ${{ github.event.issue.author }}"
+          echo "Issue author: ${{ github.event.issue.user.login }}"
