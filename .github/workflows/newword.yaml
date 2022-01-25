@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: View issue information
         run: |
+          python add_word.py ${{ github.event.issue.title }} ${{ github.event.issue.user.login }}
           echo "Issue title: ${{ github.event.issue.title }}"
           echo "Issue body: ${{ github.event.issue.body }}"
           echo "Issue author: ${{ github.event.issue.user.login }}"
