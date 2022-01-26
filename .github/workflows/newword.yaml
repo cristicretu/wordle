@@ -12,6 +12,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
       - name: View issue information
         run: |
           python ./add_word.py ${{ github.event.issue.title }} ${{ github.event.issue.user.login }}
