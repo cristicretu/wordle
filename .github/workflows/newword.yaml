@@ -3,7 +3,10 @@
 name: CI
 
 # Controls when the workflow will run
-on: issues
+on:
+  issues:
+    types:
+      - opened
 jobs:
   # This workflow contains a single job called "build"
   build:
