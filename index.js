@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'doare',
   'repet',
   'rodie',
   'doina',
