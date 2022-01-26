@@ -1,5 +1,7 @@
 'use strict'
+
 const words = [
+  'masaj',
   'carti',
   'abate',
   'aboli',
