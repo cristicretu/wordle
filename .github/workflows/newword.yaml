@@ -27,5 +27,5 @@ jobs:
           git config --global user.name 'Cristi'
           git config --global user.email 'crisemcr@gmail.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "Add new word"
+          git commit -am "Add ${{ github.event.issue.title }} word"
           git push
