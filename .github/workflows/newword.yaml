@@ -7,8 +7,19 @@ on:
   issues:
     types:
       - opened
+  issue_comment:
+    types:
+      - created
 jobs:
   # This workflow contains a single job called "build"
+  issue_commented:
+    # This job only runs for issue comments
+    name: Issue comment
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          python ./add_word.py ${{ github.event.issue.title }} ${{ github.event.comment.owner }}
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
