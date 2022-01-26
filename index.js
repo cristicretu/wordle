@@ -1,6 +1,6 @@
 'use strict'
 const words = [
-  'Title',
+  'carti',
   'abate',
   'aboli',
   'abona',
