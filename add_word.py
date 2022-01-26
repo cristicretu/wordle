@@ -20,7 +20,7 @@ rest_of_the_line = ''
 with open('index.js', 'r') as f:
 	rest_of_the_line += f.read()
 
-rest_of_the_line = ''.join(rest_of_the_line.splitlines(keepends=True)[2:])
+rest_of_the_line = ''.join(rest_of_the_line.splitlines(keepends=True)[3:])
 
 
 word = "'" + word + "',"

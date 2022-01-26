@@ -2,8 +2,6 @@
 
 const words = [
   'masaj',
-const words = [
-  'masaj',
   'carti',
   'abate',
   'aboli',
