@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          python ./add_word.py ${{ github.event.issue.title }} ${{ github.event.comment.owner }}
+          python ./add_word.py ${{ github.event.issue.title }} ${{ github.event.comment.user.login }}
           git config --global user.name 'Cristi'
           git config --global user.email 'crisemcr@gmail.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
