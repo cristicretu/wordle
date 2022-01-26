@@ -2,7 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>🇷🇴 Wordle</title>
   </head>
   <body>
@@ -124,7 +127,7 @@
       line-height: 60px;
     }
 
-    @media only screen and (max-width: 612px) {
+    @media only screen and (max-width: 500px) {
       .col {
         width: 45px;
         height: 45px;
@@ -132,7 +135,7 @@
         line-height: 45px;
       }
       .button {
-        padding: 8px;
+        padding: 10px;
         border: none;
         font-size: 14px;
         border-radius: 10px;
@@ -148,6 +151,11 @@
       #keyboard {
         padding-bottom: 70px;
         width: full;
+      }
+    }
+    @media only screen and (max-width: 350px) {
+      .button {
+        padding: 6px;
       }
     }
   </style>
