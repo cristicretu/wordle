@@ -1104,7 +1104,7 @@ function logKey(e) {
     }
 
     if (currentAttempt.length < 5) {
-      alert('Word is too short')
+      alert('Cuvantul e prea scurt!')
       return
     }
 
@@ -1125,7 +1125,16 @@ function logKey(e) {
 
     // check if currentAttempt exists in the array of words with binary search
     if (words.indexOf(currentAttempt) === -1) {
-      alert('Word does not exist')
+      if (
+        window.confirm(
+          'Cuvantul nu exista, sau s-ar putea sa nu existe in lista cuvintelor: Apasa OK pentru a-l adauga.'
+        )
+      ) {
+        window.open(
+          `https://github.com/cristicretu/wordle/issues/new?labels=word&title=${currentAttempt} `,
+          '_blank'
+        )
+      }
       return
     }
 
