@@ -14,12 +14,20 @@ jobs:
   # This workflow contains a single job called "build"
   issue_commented:
     # This job only runs for issue comments
+    
     name: Issue comment
     if: ${{ !github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - run: |
           python ./add_word.py ${{ github.event.issue.title }} ${{ github.event.comment.owner }}
+          git config --global user.name 'Cristi'
+          git config --global user.email 'crisemcr@gmail.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Add ${{ github.event.issue.title }} word"
+          git push
+          
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
