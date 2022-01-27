@@ -1004,14 +1004,38 @@ const green = 'rgb(96, 138, 84)'
 const gray = 'rgb(58,58,60)'
 const yellow = 'rgb(177, 160, 76)'
 
+const url =
+  'https://raw.githubusercontent.com/cristicretu/wordle-gen/main/result.txt'
+
 let grid = document.getElementById('grid')
 let message = document.getElementById('message')
 let keyboard = document.getElementById('keyboard')
+let check = document.getElementById('check')
 
 let word = getRandomWord()
 
 let attempt = 0
 let currentAttempt = ''
+
+let changeGame = true
+let checked = false
+
+async function updateChecked() {
+  if (changeGame === false) {
+    return
+  }
+
+  checked === false ? (checked = true) : (checked = false)
+  if (checked === false) {
+    word = getRandomWord()
+  } else {
+    await fetch(url)
+      .then((res) => res.text())
+      .then((res) => {
+        word = res
+      })
+  }
+}
 
 function createGrid() {
   for (let i = 0; i < 6; ++i) {
@@ -1159,6 +1183,7 @@ function logKey(e) {
     currentAttempt.length < 5 &&
     char.length === 1
   ) {
+    changeGame = false
     currentAttempt += char
     renderCurrentAttempt(attempt, currentAttempt)
   }
@@ -1179,8 +1204,11 @@ function createKbRow(row) {
     if (row[char] !== 'X' && row[char] !== 'Z') {
       button.innerHTML = row[char]
       button.onclick = () => {
-        if (currentAttempt.length < 5) currentAttempt += row[char]
-        renderCurrentAttempt(attempt, currentAttempt)
+        if (currentAttempt.length < 5) {
+          changeGame = false
+          currentAttempt += row[char]
+          renderCurrentAttempt(attempt, currentAttempt)
+        }
       }
     } else if (row[char] === 'X') {
       button.innerHTML = 'ENTER'
