@@ -1020,6 +1020,75 @@ let currentAttempt = ''
 let changeGame = true
 let checked = false
 
+function checkWin() {
+  if (currentAttempt === word) {
+    message.innerHTML = 'Ai castigat!'
+    attempt = 999
+
+    return
+  }
+}
+
+function populateChecked() {
+  // lol again
+  let row0 = localStorage.getItem('row-0')
+  let row1 = localStorage.getItem('row-1')
+  let row2 = localStorage.getItem('row-2')
+  let row3 = localStorage.getItem('row-3')
+  let row4 = localStorage.getItem('row-4')
+  let row5 = localStorage.getItem('row-5')
+
+  if (row0 !== null) {
+    renderPastAttempt(0, row0)
+    attempt = 1
+    currentAttempt = row0
+    checkWin()
+    currentAttempt = ''
+  }
+  if (row1 !== null) {
+    renderPastAttempt(1, row1)
+    attempt = 2
+    currentAttempt = row1
+    checkWin()
+    currentAttempt = ''
+  }
+  if (row2 !== null) {
+    renderPastAttempt(2, row2)
+    attempt = 3
+    currentAttempt = row2
+    checkWin()
+    currentAttempt = ''
+  }
+  if (row3 !== null) {
+    renderPastAttempt(3, row3)
+    attempt = 4
+    currentAttempt = row3
+    checkWin()
+    currentAttempt = ''
+  }
+  if (row4 !== null) {
+    renderPastAttempt(4, row4)
+    attempt = 5
+    currentAttempt = row4
+    checkWin()
+    currentAttempt = ''
+  }
+  if (row5 !== null) {
+    renderPastAttempt(5, row5)
+    attempt = 999
+    currentAttempt = row5
+    checkWin()
+    currentAttempt = ''
+  }
+
+  if (currentAttempt !== word && attempt === 999) {
+    message.innerHTML = `Ai pierdut! Cuvantul corect a fost: ${word}`
+    renderPastAttempt(attempt, currentAttempt)
+    attempt = 999
+    return
+  }
+}
+
 async function updateChecked() {
   if (changeGame === false) {
     return
@@ -1034,6 +1103,13 @@ async function updateChecked() {
       .then((res) => {
         word = res
       })
+
+    if (localStorage.getItem('word') !== word) {
+      localStorage.clear()
+      localStorage.setItem('word', word)
+    }
+    populateChecked()
+    console.log(attempt)
   }
 }
 
@@ -1073,6 +1149,8 @@ function findColor(parent, child, index, line) {
 
 function renderPastAttempt(row, attempt) {
   if (row > 5) return
+
+  if (checked === true) localStorage.setItem(`row-${row}`, attempt)
 
   let line = grid.children[row]
   for (let i = 0; i < 5; ++i) {
@@ -1183,6 +1261,7 @@ function logKey(e) {
     currentAttempt.length < 5 &&
     char.length === 1
   ) {
+    console.log(char)
     changeGame = false
     currentAttempt += char
     renderCurrentAttempt(attempt, currentAttempt)
