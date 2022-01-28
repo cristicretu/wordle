@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'umbra',
   'uimit',
   'furat',
   'puiut',
