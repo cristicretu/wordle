@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'nazal',
   'nasol',
   'aurie',
   'erona',
