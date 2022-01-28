@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'canin',
   'barna',
   'parca',
   'emana',
