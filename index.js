@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'moare',
   'farui',
   'darui',
   'pesta',
