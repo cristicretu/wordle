@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'darui',
   'pesta',
   'nazal',
   'nasol',
