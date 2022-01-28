@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'sfere',
   'facea',
   'venea',
   'eroda',
