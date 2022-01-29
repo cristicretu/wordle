@@ -997,7 +997,7 @@ const words = [
   'zeita',
   'zgura',
   'zodie',
-  'zvelt'
+  'zvelt',
 ]
 
 const green = 'rgb(96, 138, 84)'
@@ -1075,13 +1075,13 @@ function populateChecked() {
   }
   if (row5 !== null) {
     renderPastAttempt(5, row5)
-    attempt = 999
+    attempt = 5
     currentAttempt = row5
     checkWin()
     currentAttempt = ''
   }
 
-  if (currentAttempt !== word && attempt === 999) {
+  if (currentAttempt !== word && attempt === 5) {
     message.innerHTML = `Ai pierdut! Cuvantul corect a fost: ${word}`
     renderPastAttempt(attempt, currentAttempt)
     attempt = 999
