@@ -1114,12 +1114,10 @@ function populateChecked() {
     attempt = 5
     currentAttempt = row5
     checkWin()
-    currentAttempt = ''
   }
 
   if (currentAttempt !== word && attempt === 5) {
-    message.innerHTML = `Ai pierdut! Cuvantul corect a fost: ${word}`
-    renderPastAttempt(attempt, currentAttempt)
+    message.innerHTML = `Ai pierdut!`
     attempt = 999
     return
   }
@@ -1140,12 +1138,18 @@ async function updateChecked() {
         word = res
       })
 
+    const epochMs = new Date('January 1, 2022 00:00:00').valueOf()
+    const now = Date.now()
+    const msInDay = 86400000
+    const index = Math.floor((now - epochMs) / msInDay)
+
+    word = words[index % words.length]
+
     if (localStorage.getItem('word') !== word) {
       localStorage.clear()
       localStorage.setItem('word', word)
     }
     populateChecked()
-    console.log(attempt)
   }
 }
 
