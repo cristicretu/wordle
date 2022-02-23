@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'sunet',
   'caste',
   'tibie',
   'morti',
