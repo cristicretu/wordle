@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'pusca',
   'sunet',
   'caste',
   'tibie',
