@@ -2,6 +2,7 @@
 
 const words = [
   'trufa',
+  'trufa',
   'tarca',
   'iarta',
   'urlat',
