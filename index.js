@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'aurit',
   'acida',
   'abila',
   'abaca',
