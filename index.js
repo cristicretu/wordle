@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'prime',
   'aurit',
   'acida',
   'abila',
