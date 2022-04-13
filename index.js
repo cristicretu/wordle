@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'adapa',
   'deloc',
   'acizi',
   'azuga',
