@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'ghimp',
   'uleia',
   'albin',
   'omora',
