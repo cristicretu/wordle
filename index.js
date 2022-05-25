@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'sarea',
   'dilua',
   'calma',
   'punea',
