@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'lemne',
   'mango',
   'sarea',
   'dilua',
