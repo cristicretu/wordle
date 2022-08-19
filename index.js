@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'esuat',
   'ovare',
   'voleu',
   'larva',
