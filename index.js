@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'usier',
   'afina',
   'fiert',
   'esuat',
