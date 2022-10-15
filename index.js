@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'croia',
   'nufar',
   'picur',
   'crese',
