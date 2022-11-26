@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'farul',
   'suras',
   'patul',
   'setea',
