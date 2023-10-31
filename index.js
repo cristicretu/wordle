@@ -1,6 +1,7 @@
 'use strict'
 
 const words = [
+  'raliu',
   'picat',
   'triaj',
   'sacul',
