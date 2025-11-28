@@ -1318,6 +1318,39 @@ function getRandomWord() {
   return words[Math.floor(Math.random() * words.length)]
 }
 
+// Compute colors for all letters in a guess using the correct Wordle algorithm
+function computeColors(target, guess) {
+  const result = new Array(5).fill(gray)
+  const targetLetterCounts = {}
+
+  // Count occurrences of each letter in target word
+  for (const char of target) {
+    targetLetterCounts[char] = (targetLetterCounts[char] || 0) + 1
+  }
+
+  // First pass: Mark exact matches (green) and decrement available counts
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === target[i]) {
+      result[i] = green
+      targetLetterCounts[guess[i]]--
+    }
+  }
+
+  // Second pass: Mark wrong position matches (yellow) for remaining letters
+  for (let i = 0; i < 5; i++) {
+    if (result[i] === green) continue // Already matched exactly
+
+    const char = guess[i]
+    if (char !== undefined && targetLetterCounts[char] > 0) {
+      result[i] = yellow
+      targetLetterCounts[char]--
+    }
+  }
+
+  return result
+}
+
+// Legacy wrapper for compatibility (not used in new rendering)
 function findColor(parent, child, index, line) {
   if (parent[index] === child[index]) {
     return green
@@ -1338,46 +1371,53 @@ function renderPastAttempt(row, attempt) {
 
   if (checked === true) localStorage.setItem(`row-${row}`, attempt)
 
+  // Compute all colors at once using the correct algorithm
+  const colors = computeColors(word, attempt)
+
   let line = grid.children[row]
   for (let i = 0; i < 5; ++i) {
     let col = line.children[i]
-    col.style.backgroundColor = findColor(word, attempt, i, line)
+    col.style.backgroundColor = colors[i]
     col.style.border =
       attempt[i] !== undefined
         ? `2.5px solid ${col.style.backgroundColor}`
         : '2.5px solid rgb(58,58,60)'
     col.innerHTML = attempt[i] ?? '<div style="opacity: 0">X<div>'
 
-    //lol
-
+    // Update keyboard colors
     let line1 = keyboard.children[0]
     let line2 = keyboard.children[1]
     let line3 = keyboard.children[2]
 
+    // Helper to update keyboard key color with proper priority: green > yellow > gray
+    const updateKeyColor = (keyElement) => {
+      const currentColor = keyElement.style.backgroundColor
+      const newColor = col.style.backgroundColor
+      // Only update if: key is default (unused), or upgrading from gray to yellow/green, or from yellow to green
+      if (currentColor === 'rgb(118, 118, 118)') {
+        keyElement.style.backgroundColor = newColor
+      } else if (currentColor === gray && (newColor === yellow || newColor === green)) {
+        keyElement.style.backgroundColor = newColor
+      } else if (currentColor === yellow && newColor === green) {
+        keyElement.style.backgroundColor = newColor
+      }
+    }
+
     for (let j = 0; j < line1.children.length; ++j) {
       if (line1.children[j].innerHTML === attempt[i]) {
-        line1.children[j].style.backgroundColor =
-          line1.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
-            ? col.style.backgroundColor
-            : line1.children[j].style.backgroundColor
+        updateKeyColor(line1.children[j])
       }
     }
 
     for (let j = 0; j < line2.children.length; ++j) {
       if (line2.children[j].innerHTML === attempt[i]) {
-        line2.children[j].style.backgroundColor =
-          line2.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
-            ? col.style.backgroundColor
-            : line2.children[j].style.backgroundColor
+        updateKeyColor(line2.children[j])
       }
     }
 
     for (let j = 0; j < line3.children.length; ++j) {
       if (line3.children[j].innerHTML === attempt[i]) {
-        line3.children[j].style.backgroundColor =
-          line3.children[j].style.backgroundColor === 'rgb(118, 118, 118)'
-            ? col.style.backgroundColor
-            : line3.children[j].style.backgroundColor
+        updateKeyColor(line3.children[j])
       }
     }
   }
