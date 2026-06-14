@@ -152,6 +152,36 @@ export function buildStats(opts: StatsModalOptions): Node {
   return frag
 }
 
+/* ── Practice result (practice games don't touch daily stats) ── */
+
+export interface PracticeResultOptions {
+  won: boolean
+  rowsUsed: number
+  answer: string
+  onNewWord: () => void
+}
+
+export function buildPracticeResult(opts: PracticeResultOptions): Node {
+  const box = el('div', 'practice-result')
+  if (opts.won) {
+    box.appendChild(el('div', 'practice-emoji', '🎉'))
+    box.appendChild(el('h3', 'practice-title', 'Felicitări!'))
+    const tries =
+      opts.rowsUsed === 1 ? 'din prima încercare' : `din ${opts.rowsUsed}/6 încercări`
+    box.appendChild(el('p', 'practice-sub', `Ai ghicit ${opts.answer.toUpperCase()} ${tries}.`))
+  } else {
+    const banner = el('div', 'answer-banner')
+    banner.appendChild(el('span', 'answer-banner-label', 'Cuvântul era'))
+    banner.appendChild(el('span', 'answer-banner-word', opts.answer.toUpperCase()))
+    box.appendChild(banner)
+  }
+  const btn = el('button', 'btn btn--primary', 'Cuvânt nou')
+  btn.type = 'button'
+  btn.addEventListener('click', opts.onNewWord)
+  box.appendChild(btn)
+  return box
+}
+
 /* ── Settings ─────────────────────────────────────────────── */
 
 export interface SettingsModalOptions {

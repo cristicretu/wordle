@@ -33,7 +33,7 @@ import { recordDaily } from './stats.ts'
 import { buildShareText, copyText, nativeShare } from './share.ts'
 import { toast } from './toast.ts'
 import { closeModal, openModal } from './modal.ts'
-import { buildHelp, buildSettings, buildStats } from './ui-modals.ts'
+import { buildHelp, buildPracticeResult, buildSettings, buildStats } from './ui-modals.ts'
 
 /* ── app state ─────────────────────────────────────────────── */
 
@@ -227,14 +227,33 @@ function celebrate(rowsUsed: number) {
 
 function finishGame(won: boolean, rowsUsed: number) {
   syncOverState()
-  let highlightRow: number | null = null
-  if (mode === 'daily') {
-    recordDaily({ dayIndex: game.dayIndex, won, rowsUsed })
-    highlightRow = won ? rowsUsed : null
-  }
   syncSubhead()
-  // Let the celebration breathe before showing the summary.
-  setTimeout(() => openStats(highlightRow), won ? 1500 : 1100)
+  const delay = won ? 1500 : 1100 // let the celebration breathe
+
+  // Practice games don't touch daily stats — show a light result card instead.
+  if (mode === 'practice') {
+    setTimeout(() => openPracticeResult(won, rowsUsed), delay)
+    return
+  }
+
+  recordDaily({ dayIndex: game.dayIndex, won, rowsUsed })
+  const highlightRow = won ? rowsUsed : null
+  setTimeout(() => openStats(highlightRow), delay)
+}
+
+function openPracticeResult(won: boolean, rowsUsed: number) {
+  openModal({
+    title: 'Exercițiu',
+    body: buildPracticeResult({
+      won,
+      rowsUsed,
+      answer: game.answerStr,
+      onNewWord: () => {
+        closeModal()
+        startPractice(true)
+      },
+    }),
+  })
 }
 
 /* ── modals ────────────────────────────────────────────────── */
