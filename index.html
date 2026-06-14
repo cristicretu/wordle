@@ -1,153 +1,62 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ro" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>🇷🇴 Wordle</title>
+    <meta name="theme-color" content="#121213" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta
+      name="description"
+      content="Wordle în română — ghicește cuvântul de 5 litere în 6 încercări. Cu diacritice."
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="canonical" href="https://cristicretu.github.io/wordle/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Wordle în română" />
+    <meta
+      property="og:description"
+      content="Ghicește cuvântul de 5 litere în 6 încercări. Un joc nou în fiecare zi — cu diacritice."
+    />
+    <meta property="og:locale" content="ro_RO" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Wordle în română" />
+    <meta
+      name="twitter:description"
+      content="Ghicește cuvântul de 5 litere în 6 încercări. Cu diacritice."
+    />
+    <title>Wordle în română</title>
   </head>
   <body>
-    <nav>
-      <input onchange="updateChecked()" id="check" type="checkbox" />
-      <h1>🇷🇴 Wordle</h1>
-      <a
-        href="https://github.com/cristicretu/wordle"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon"
-        >
-          <path
-            d="M7.49936 0.850006C3.82767 0.850006 0.849976 3.8273 0.849976 7.50023C0.849976 10.4379 2.75523 12.9306 5.39775 13.8104C5.73047 13.8712 5.85171 13.6658 5.85171 13.4895C5.85171 13.3315 5.846 12.9135 5.84273 12.3587C3.99301 12.7604 3.60273 11.4671 3.60273 11.4671C3.30022 10.6988 2.86423 10.4942 2.86423 10.4942C2.26044 10.0819 2.90995 10.0901 2.90995 10.0901C3.57742 10.137 3.9285 10.7755 3.9285 10.7755C4.52167 11.7916 5.48512 11.4981 5.86396 11.3279C5.92438 10.8984 6.09625 10.6053 6.28608 10.4391C4.80948 10.2709 3.25695 9.70063 3.25695 7.15241C3.25695 6.42615 3.51618 5.83298 3.94157 5.368C3.87299 5.1998 3.64478 4.52375 4.00689 3.60807C4.00689 3.60807 4.56494 3.42926 5.83538 4.28941C6.36568 4.14204 6.93477 4.06856 7.50018 4.0657C8.06518 4.06856 8.63386 4.14204 9.16498 4.28941C10.4346 3.42926 10.9918 3.60807 10.9918 3.60807C11.3548 4.52375 11.1266 5.1998 11.0584 5.368C11.4846 5.83298 11.7418 6.42615 11.7418 7.15241C11.7418 9.70716 10.1868 10.2693 8.70571 10.4338C8.94412 10.6392 9.15681 11.045 9.15681 11.6655C9.15681 12.5542 9.14865 13.2715 9.14865 13.4895C9.14865 13.6675 9.26867 13.8745 9.60588 13.8095C12.2464 12.9282 14.15 10.4375 14.15 7.50023C14.15 3.8273 11.1723 0.850006 7.49936 0.850006Z"
-            fill="currentColor"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </a>
-    </nav>
-    <hr />
-    <h2 id="message"></h2>
-    <div id="game">
-      <div id="grid"></div>
-      <div id="keyboard"></div>
+    <div id="app">
+      <header class="header">
+        <button class="icon-btn" id="help-btn" aria-label="Cum se joacă" title="Cum se joacă">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 16.25a1.13 1.13 0 1 1 0-2.25 1.13 1.13 0 0 1 0 2.25Zm1.4-6.13c-.7.5-.9.78-.9 1.32v.31a.5.5 0 0 1-.5.5h-.0a.5.5 0 0 1-.5-.5v-.42c0-.98.45-1.6 1.32-2.2.78-.55 1.1-.86 1.1-1.5 0-.74-.6-1.27-1.55-1.27-.74 0-1.3.36-1.6 1.02a.5.5 0 0 1-.66.25l-.2-.09a.5.5 0 0 1-.26-.65A2.9 2.9 0 0 1 12 6.1c1.7 0 2.95 1 2.95 2.46 0 1.1-.6 1.74-1.55 2.4Z"/></svg>
+        </button>
+        <h1 class="title">Wordle</h1>
+        <div class="header-right">
+          <button class="icon-btn" id="stats-btn" aria-label="Statistici" title="Statistici">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4Zm6.5 0a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-3Zm6.5 0a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-3Z"/></svg>
+          </button>
+          <button class="icon-btn" id="settings-btn" aria-label="Setări" title="Setări">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8.4-2.9.04-.6-.04-.6 1.42-1.1a.5.5 0 0 0 .12-.64l-1.35-2.33a.5.5 0 0 0-.6-.22l-1.67.67a6.6 6.6 0 0 0-1.04-.6l-.25-1.78a.5.5 0 0 0-.5-.43h-2.7a.5.5 0 0 0-.5.43l-.25 1.78c-.37.15-.72.35-1.05.6l-1.66-.67a.5.5 0 0 0-.6.22L6.66 7.06a.5.5 0 0 0 .12.64l1.42 1.1-.04.6.04.6-1.42 1.1a.5.5 0 0 0-.12.64l1.35 2.33c.13.22.4.31.6.22l1.67-.67c.32.25.67.45 1.04.6l.25 1.78c.04.25.25.43.5.43h2.7c.25 0 .46-.18.5-.43l.25-1.78c.37-.15.72-.35 1.05-.6l1.66.67c.22.09.48 0 .6-.22l1.35-2.33a.5.5 0 0 0-.12-.64l-1.42-1.1Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="game" id="game">
+        <div class="board-wrap">
+          <div class="board" id="board" role="grid" aria-label="Tablă de joc"></div>
+        </div>
+        <div class="keyboard" id="keyboard"></div>
+      </main>
     </div>
+
+    <div class="toaster" id="toaster" aria-live="polite" aria-atomic="true"></div>
+    <div id="modal-root"></div>
+
+    <script type="module" src="/src/main.ts"></script>
   </body>
-  <style type="text/css">
-    :root {
-      touch-action: pan-x pan-y;
-      height: 100%;
-    }
-    .icon {
-      fill: white;
-      color: white;
-    }
-    body,
-    html {
-      background: #111;
-      color: #888;
-      font-family: sans-serif;
-      text-align: center;
-      text-transform: uppercase;
-    }
-    #game {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 85vh;
-    }
-    h2 {
-      height: 0;
-      padding-bottom: 10px;
-    }
-    #keyboard {
-      padding-bottom: 25px;
-    }
-    nav {
-      align-items: center;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 60vh;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .button {
-      padding: 15px;
-      border: none;
-      font-size: 24px;
-      border-radius: 10px;
-      margin: 2px;
-      text-transform: uppercase;
-      color: rgb(244, 244, 244);
-      cursor: pointer;
-    }
-    hr {
-      max-width: 60vh;
-      border: 0.1px solid #888;
-      opacity: 50%;
-      margin-bottom: 5rem;
-    }
-    h1 {
-      font-size: 2rem;
-      color: rgb(244, 244, 244);
-      margin-bottom: -1px;
-      letter-spacing: 0.2rem;
-      margin-top: -1px;
-    }
-    .col {
-      width: 60px;
-      height: 60px;
-      border: 2.5px solid rgb(58, 58, 60);
-      display: inline-block;
-      margin: 0.2rem;
-      color: white;
-      font-size: 2rem;
-      font-weight: bold;
-      line-height: 60px;
-    }
-
-    @media only screen and (max-width: 500px) {
-      .col {
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
-        line-height: 45px;
-      }
-      .button {
-        padding: 10px;
-        border: none;
-        font-size: 14px;
-        border-radius: 10px;
-        margin: 1px;
-        color: rgb(244, 244, 244);
-      }
-      h2 {
-        font-size: 12px;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-      #keyboard {
-        padding-bottom: 70px;
-        width: full;
-      }
-    }
-    @media only screen and (max-width: 350px) {
-      .button {
-        padding: 6px;
-      }
-    }
-
-  </style>
-  <script src="index.js"></script>
 </html>
